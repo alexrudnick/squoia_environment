@@ -35,9 +35,19 @@ squoia_analyzer:
 	python build_config.py > squoia-read-only/FreeLingModules/squoia.cfg
 
 desr: desrinstall desr-1.4.2
+
+desr-1.4.2:
 	wget http://downloads.sourceforge.net/project/desr/Release/desr-1.4.2.tgz
 	tar xf desr-1.4.2.tgz
 
 desrinstall: desr-1.4.2
 	mkdir -p desrinstall
-	cd desr-1.4.2 ; ./configure --prefix=$(SQUOIAENV)/desrinstall; make; make install
+	## PATCH IT UP: these files need unistd.h on Ubuntu.
+	sed -i "1s/^/#include <unistd.h> \n/"  desr-1.4.2/src/SvmParser.cpp
+	sed -i "1s/^/#include <unistd.h> \n/"  desr-1.4.2/src/MultiSvmParser.cpp
+	cd desr-1.4.2 ; ./configure --prefix=$(SQUOIAENV)/desrinstall;
+	# ham-fistedly remove mention of desr.py because wtf.
+	sed -i "s/\bdesr.py\b//"  desr-1.4.2/src/Makefile
+	cd desr-1.4.2/src/blas; make
+	cd desr-1.4.2; make
+	cd desr-1.4.2; make install
