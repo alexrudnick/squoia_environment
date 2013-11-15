@@ -1,4 +1,4 @@
-all: freelinginstall squoia-read-only squoia_analyzer
+all: freelinginstall squoia-read-only squoia_analyzer desr
 
 SQUOIAENV=$(CURDIR)
 
@@ -34,4 +34,10 @@ squoia_analyzer:
 	-o freelinginstall/bin/squoia_analyzer
 	python build_config.py > squoia-read-only/FreeLingModules/squoia.cfg
 
+desr: desrinstall desr-1.4.2
+	wget http://downloads.sourceforge.net/project/desr/Release/desr-1.4.2.tgz
+	tar xf desr-1.4.2.tgz
 
+desrinstall: desr-1.4.2
+	mkdir -p desrinstall
+	cd desr-1.4.2 ; ./configure --prefix=$(SQUOIAENV)/desrinstall; make; make install
