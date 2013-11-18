@@ -1,4 +1,5 @@
-all: freelinginstall squoia-read-only squoia_analyzer desrinstall
+all: freelinginstall squoia-read-only squoia_analyzer desrinstall desr_models \
+     lttoolbox
 
 SQUOIAENV=$(CURDIR)
 
@@ -6,6 +7,8 @@ FREELING_SRC=freeling-3.1
 
 FLM=squoia-read-only/FreeLingModules
 FLINCLUDE=freelinginstall/include/
+DESRHOME=desr-1.4.2/
+DESRMODULES=squoia-read-only/desrModules/
 
 squoia-read-only:
 	svn checkout http://squoia.googlecode.com/svn/trunk/ squoia-read-only
@@ -53,3 +56,23 @@ desrinstall: desr-1.4.2
 	cd desr-1.4.2; make
 	mkdir -p desrinstall/bin
 	cp desr-1.4.2/src/desr desr-1.4.2/src/*.so desrinstall/bin
+
+desr_server_client:
+	g++ $(DESRMODULES)/desr_client.cc -o $(DESRMODULES)/desr_client -I$(FLINCLUDE)
+	g++ $(DESRMODULES)/desr_server.cc -o $(DESRMODULES)/desr_server -std=gnu++0x -I/usr/include/python2.7/ -I$(FLINCLUDE) -I$(DESRHOME)/src -I$(DESRHOME) -I$(DESRHOME)/ixe/ -I$(DESRHOME)/classifier/ $(DESRHOME)/src/libdesr.so  $(DESRHOME)/ixe/libixe.a -lpthread
+
+desr_models:
+	mkdir -p desrinstall/models
+	wget "https://sites.google.com/site/desrparser/models/spanish.conf?attredirects=0&d=1" -O desrinstall/models/spanish.conf
+	wget http://medialab.di.unipi.it/Project/QA/Parser/models/spanish_es4.MLP -O desrinstall/models/spanish_es4.MLP
+	wget http://medialab.di.unipi.it/Project/QA/Parser/models/spanish.MLP -O desrinstall/models/spanish.MLP
+
+lttoolbox:
+	svn co https://svn.code.sf.net/p/apertium/svn/trunk/lttoolbox
+	## TODO(alexr): compile lttoolbox
+
+perlmodules:
+	## can't currently install File::Basename -- why?
+	cpan XML::LibXML Storable File::Basename File::Spec::Functions \
+             List::MoreUtils AI::NaiveBayes1
+
