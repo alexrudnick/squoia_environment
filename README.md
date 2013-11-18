@@ -13,6 +13,9 @@ Maybe?
 
     ln -s /usr/bin/doxygen /usr/local/bin/doxygen
 
+    # you may need swig installed
+    sudo apt-get install swig
+
 Definitely:
 
     make
