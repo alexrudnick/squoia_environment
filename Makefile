@@ -1,5 +1,5 @@
 all: freelinginstall squoia-read-only squoia_analyzer desrinstall desr_models \
-     lttoolbox
+     lttoolboxinstall
 
 SQUOIAENV=$(CURDIR)
 
@@ -67,10 +67,28 @@ desr_models:
 	wget http://medialab.di.unipi.it/Project/QA/Parser/models/spanish_es4.MLP -O desrinstall/models/spanish_es4.MLP
 	wget http://medialab.di.unipi.it/Project/QA/Parser/models/spanish.MLP -O desrinstall/models/spanish.MLP
 
-lttoolbox:
+lttoolboxinstall:
+	mkdir -p lttoolboxinstall
 	svn co https://svn.code.sf.net/p/apertium/svn/trunk/lttoolbox
-	## TODO(alexr): compile lttoolbox
+	cd lttoolbox ; sh autogen.sh --prefix=$(SQUOIAENV)/lttoolboxinstall ; make ; make install
 
+matxinbranches:
+	svn co https://svn.code.sf.net/p/matxin/code/branches matxinbranches
+
+matxin: matxinbranches
+	cp squoia-read-only/MT_systems/matxin-lex/matxin_xfer_lex.cc matxinbranches/matxin/src/
+	sed -i 's/^matxin_destxt_SOURCES/###matxin_destxt_SOURCES/g' matxinbranches/matxin/src/Makefile.am
+	sed -i 's/^matxin_deshtml_SOURCES/###matxin_deshtml_SOURCES/g' matxinbranches/matxin/src/Makefile.am
+	sed -i 's/matxin-deshtml//g' matxinbranches/matxin/src/Makefile.am
+	sed -i 's/matxin-destxt//g' matxinbranches/matxin/src/Makefile.am
+	mkdir -p matxininstall
+	## XXX: current problem: how to make matxin find the libraries lttoolbox
+	## and libpcre ?
+	cd matxinbranches/matxin ; sh ./autogen.sh --prefix=$(SQUOIAENV)/matxininstall ; make ; make install
+
+
+
+## probably want to run this target with sudo.
 perlmodules:
 	cpan XML::LibXML Storable File::Spec::Functions \
              List::MoreUtils AI::NaiveBayes1

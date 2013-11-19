@@ -17,6 +17,7 @@ Maybe?
     sudo apt-get install swig
 
     sudo apt-get install libxml2-dev
+    sudo apt-get install xsltproc
 
     # install these perl modules too.
     sudo cpan XML::LibXML Storable File::Spec::Functions List::MoreUtils AI::NaiveBayes1
