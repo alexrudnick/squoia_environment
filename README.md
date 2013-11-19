@@ -19,7 +19,7 @@ Maybe?
     sudo apt-get install libxml2-dev
 
     # install these perl modules too.
-    sudo cpan XML::LibXML Storable File::Basename File::Spec::Functions List::MoreUtils AI::NaiveBayes1
+    sudo cpan XML::LibXML Storable File::Spec::Functions List::MoreUtils AI::NaiveBayes1
 
     (or just):
     sudo make perlmodules

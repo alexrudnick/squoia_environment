@@ -72,7 +72,6 @@ lttoolbox:
 	## TODO(alexr): compile lttoolbox
 
 perlmodules:
-	## can't currently install File::Basename -- why?
-	cpan XML::LibXML Storable File::Basename File::Spec::Functions \
+	cpan XML::LibXML Storable File::Spec::Functions \
              List::MoreUtils AI::NaiveBayes1
 
