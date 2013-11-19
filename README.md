@@ -1,7 +1,7 @@
 squoia environment
 ==================
 
-Easy build scripts for SQUOIA
+Relatively easy build scripts for [SQUOIA](https://code.google.com/p/squoia/).
 
 Automating the process at https://code.google.com/p/squoia/wiki/Installation
 
