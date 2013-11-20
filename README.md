@@ -18,6 +18,7 @@ Maybe?
 
     sudo apt-get install libxml2-dev
     sudo apt-get install xsltproc
+    sudo apt-get install libpcre++-dev
 
     # install these perl modules too.
     sudo cpan XML::LibXML Storable File::Spec::Functions List::MoreUtils AI::NaiveBayes1

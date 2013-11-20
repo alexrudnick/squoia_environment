@@ -2,6 +2,7 @@ all: freelinginstall squoia-read-only squoia_analyzer desrinstall desr_models \
      lttoolboxinstall
 
 SQUOIAENV=$(CURDIR)
+SQUOIAENV_ESCAPED=$(shell echo $(CURDIR) | sed 's/\//\\\//g')
 
 FREELING_SRC=freeling-3.1
 
@@ -82,11 +83,9 @@ matxin: matxinbranches
 	sed -i 's/matxin-deshtml//g' matxinbranches/matxin/src/Makefile.am
 	sed -i 's/matxin-destxt//g' matxinbranches/matxin/src/Makefile.am
 	mkdir -p matxininstall
-	## XXX: current problem: how to make matxin find the libraries lttoolbox
-	## and libpcre ?
+	export PKG_CONFIG_PATH="$(SQUOIAENV)/pkgconfig/"
+	sed 's/SQUOIA_ENVIRONMENT/$(SQUOIAENV_ESCAPED)/g' < pkgconfig/lttoolbox-3.2.pc.orig > pkgconfig/lttoolbox-3.2.pc
 	cd matxinbranches/matxin ; sh ./autogen.sh --prefix=$(SQUOIAENV)/matxininstall ; make ; make install
-
-
 
 ## probably want to run this target with sudo.
 perlmodules:
