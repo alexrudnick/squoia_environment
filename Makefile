@@ -92,3 +92,7 @@ perlmodules:
 	cpan XML::LibXML Storable File::Spec::Functions \
              List::MoreUtils AI::NaiveBayes1
 
+compile_dix: lttoolboxinstall
+	export LD_LIBRARY_PATH="$(SQUOIAENV)/lttoolboxinstall/lib"
+	lttoolboxinstall/bin/lt-comp lr squoia-read-only/MT_systems/esqu/lexica/es-quz.dix squoia-read-only/MT_systems/esqu/lexica/es-quz.bin
+	lttoolboxinstall/bin/lt-comp lr squoia-read-only/MT_systems/esde/lexica/es-de.dix squoia-read-only/MT_systems/esde/lexica/es-de.bin
