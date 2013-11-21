@@ -8,6 +8,15 @@ Automating the process at https://code.google.com/p/squoia/wiki/Installation
 
 Things you need to do
 =====================
+Definitely:
+
+    make
+
+But first:
+
+  * get the Ancora Spanish lexicon from here: http://clic.ub.edu/corpus/en/ancora-descarregues
+    * you'll have to register for an account to download the lexicon. This requires waiting for human intervention on their part, because "good job, champ."
+
 
 Maybe?
 
@@ -26,6 +35,3 @@ Maybe?
     (or just):
     sudo make perlmodules
 
-Definitely:
-
-    make
